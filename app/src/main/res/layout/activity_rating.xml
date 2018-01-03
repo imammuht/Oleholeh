@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
+    android:id="@+id/activity_rating"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.sunubismo.oleholeh.MainActivity">
+    tools:context="com.sunubismo.oleholeh.RatingActivity">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_toko"
+        android:id="@+id/rvAllRating"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-
 </RelativeLayout>
