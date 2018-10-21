@@ -11,6 +11,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -58,6 +59,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
     Double lat, lon;
+    String distance = "";
+    TextView tvDistance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +68,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_maps);
 
         Intent intent = getIntent();
-        lat = intent.getDoubleExtra(KEY_LAT, 7.7777);
+        lat = intent.getDoubleExtra(KEY_LAT, -7.7777);
         lon = intent.getDoubleExtra(KEY_LON, 110.7777);
+        Toast.makeText(this, String.valueOf(lat), Toast.LENGTH_SHORT).show();
 
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -74,6 +78,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         // Initializing
         MarkerPoints = new ArrayList<>();
+        tvDistance = (TextView) findViewById(R.id.tv_distance);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -210,7 +215,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 // Starts parsing data
                 routes = parser.parse(jObject);
                 Log.d("ParserTask","Executing routes");
-                Log.d("ParserTask",routes.toString());
+                Log.d("distance location", parser.getDistance(jObject));
+                distance = parser.getDistance(jObject);
 
             } catch (Exception e) {
                 Log.d("ParserTask",e.toString());
@@ -224,6 +230,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         protected void onPostExecute(List<List<HashMap<String, String>>> result) {
             ArrayList<LatLng> points;
             PolylineOptions lineOptions = null;
+
+            tvDistance.setText("Jarak pengguna ke lokasi toko: "+distance);
 
             // Traversing through all the routes
             for (int i = 0; i < result.size(); i++) {
@@ -366,8 +374,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_LOCATION: {
                 // If request is cancelled, the result arrays are empty.

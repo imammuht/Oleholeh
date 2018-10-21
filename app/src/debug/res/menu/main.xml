@@ -1,6 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/profile"
-        android:title="My Profile" />
-    <item android:id="@+id/logout"
-        android:title="Log out" />
+    <item android:id="@+id/name"
+        android:title="Sort By Name" />
+    <item android:id="@+id/rating"
+        android:title="Sort By Rating" />
 </menu>

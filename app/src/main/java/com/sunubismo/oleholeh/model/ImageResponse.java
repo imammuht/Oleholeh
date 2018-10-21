@@ -1,26 +1,22 @@
-
 package com.sunubismo.oleholeh.model;
 
 import com.google.gson.annotations.SerializedName;
-import com.sunubismo.oleholeh.model.toko.Datum;
-
-import java.util.List;
 
 @SuppressWarnings("unused")
-public class DataResponse {
+public class ImageResponse {
 
     @SerializedName("data")
-    private List<Datum> mData;
+    private String mData;
     @SerializedName("message")
     private String mMessage;
     @SerializedName("success")
     private Boolean mSuccess;
 
-    public List<Datum> getData() {
+    public String getData() {
         return mData;
     }
 
-    public void setData(List<Datum> data) {
+    public void setData(String data) {
         mData = data;
     }
 

@@ -54,42 +54,41 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
             android:orientation="horizontal">
 
-            <Button
+            <ImageButton
                 android:id="@+id/bt_lokasi"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:drawableLeft="@mipmap/ic_launcher"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_margin="5dp"
+                android:scaleType="centerInside"
+                android:background="@drawable/lokasi"
                 android:text="Lokasi"/>
-            <Button
+            <ImageButton
                 android:id="@+id/bt_panggil"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:drawableLeft="@mipmap/ic_launcher"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_margin="5dp"
+                android:scaleType="centerInside"
+                android:background="@drawable/panggil"
                 android:text="Panggil"/>
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
+            <ImageButton
                 android:id="@+id/bt_pesan"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:drawableLeft="@mipmap/ic_launcher"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_margin="5dp"
+                android:scaleType="centerInside"
+                android:background="@drawable/pesan"
                 android:text="Kirim Pesan"/>
-            <Button
+            <ImageButton
                 android:id="@+id/bt_email"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:drawableLeft="@mipmap/ic_launcher"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_margin="5dp"
+                android:scaleType="centerInside"
+                android:background="@drawable/email"
                 android:text="Kirim Email"/>
 
         </LinearLayout>

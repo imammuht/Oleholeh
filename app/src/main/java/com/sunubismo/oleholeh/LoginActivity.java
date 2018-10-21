@@ -11,11 +11,9 @@ import android.widget.Toast;
 import com.sunubismo.oleholeh.api.RestAPI;
 import com.sunubismo.oleholeh.api.RetrofitService;
 import com.sunubismo.oleholeh.helper.SessionManager;
-import com.sunubismo.oleholeh.model.DataResponse;
-import com.sunubismo.oleholeh.model.User;
+import com.sunubismo.oleholeh.model.user.Datum;
+import com.sunubismo.oleholeh.model.user.LoginResponse;
 
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -25,7 +23,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText etEmail, etPassword;
     Button btLogin, btToDaftar;
 
-    RequestBody email, password;
+    String email, password;
     SessionManager sessionManager;
 
     @Override
@@ -70,34 +68,34 @@ public class LoginActivity extends AppCompatActivity {
             focusView.requestFocus();
         } else {
             //jika email valid, lakukan login
-            email = RequestBody.create(MediaType.parse("text/plain"), etEmail.getText().toString());
-            password = RequestBody.create(MediaType.parse("text/plain"), etPassword.getText().toString());
+            email = etEmail.getText().toString();
+            password = etPassword.getText().toString();
             Login();
         }
     }
 
     private void Login(){
         final RestAPI service = RetrofitService.createRetrofitClient();
-        Call<DataResponse> req = service.login(email, password);
-        req.enqueue(new Callback<DataResponse>() {
+        Call<LoginResponse> req = service.login(email, password);
+        req.enqueue(new Callback<LoginResponse>() {
             @Override
-            public void onResponse(Call<DataResponse> call, Response<DataResponse> response) {
-                String status = response.body().getStatus();
-                if (status.equalsIgnoreCase("sukses")){
-                    User user = response.body().getUser();
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                LoginResponse loginResponse = response.body();
+                if (loginResponse.getSuccess()){
+                    Datum user = loginResponse.getData().get(0);
                     sessionManager = new SessionManager(getApplicationContext());
-                    sessionManager.createLoginSession(user.getId(), user.getNama(), user.getEmail(), user.getImage());
-                    Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                    sessionManager.createLoginSession(user.getToken(), user.getId(), user.getNama(), user.getEmail(), user.getGambar());
+                    Intent i = new Intent(LoginActivity.this, MenuActivity.class);
                     startActivity(i);
-                }else if (status.equalsIgnoreCase("gagal")){
+                } else if (!loginResponse.getSuccess()){
                     Toast.makeText(LoginActivity.this, "Username atau Password salah", Toast.LENGTH_SHORT).show();
-                }else {
+                } else {
                     Toast.makeText(LoginActivity.this, "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<DataResponse> call, Throwable t) {
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
                 t.printStackTrace();
                 Toast.makeText(LoginActivity.this, "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
             }

@@ -10,7 +10,7 @@ import com.sunubismo.oleholeh.helper.SessionManager;
 
 import java.util.HashMap;
 
-public class UserActivity extends AppCompatActivity {
+public class UserActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

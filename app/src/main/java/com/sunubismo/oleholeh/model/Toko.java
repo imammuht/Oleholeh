@@ -10,7 +10,8 @@ public class Toko {
     private String jambuka;
     private double lat;
     private double lon;
-    private double rating;
+    private double distance;
+    private float rating;
     private String telepon;
     private String email;
 
@@ -86,11 +87,19 @@ public class Toko {
         this.lon = lon;
     }
 
-    public double getRating() {
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
+
+    public float getRating() {
         return rating;
     }
 
-    public void setRating(double rating) {
+    public void setRating(float rating) {
         this.rating = rating;
     }
 

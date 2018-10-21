@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,11 +20,16 @@ import android.widget.Toast;
 import com.sunubismo.oleholeh.api.RestAPI;
 import com.sunubismo.oleholeh.api.RetrofitService;
 import com.sunubismo.oleholeh.model.DataResponse;
+import com.sunubismo.oleholeh.model.ImageResponse;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,10 +42,13 @@ public class DaftarActivity extends AppCompatActivity {
     TextView tvGambar;
     ProgressBar pbDaftar;
 
-    RequestBody image, nama, email, password;
+    String nama, email, password;
+    MultipartBody.Part image;
 
     public static final int PICK_IMAGE = 100;
     private Bitmap bitmap;
+
+    final RestAPI service = RetrofitService.createRetrofitClient();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,11 +79,11 @@ public class DaftarActivity extends AppCompatActivity {
         btDaftar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                nama = RequestBody.create(MediaType.parse("text/plain"), etNama.getText().toString());
-                email = RequestBody.create(MediaType.parse("text/plain"), etEmail.getText().toString());
-                password = RequestBody.create(MediaType.parse("text/plain"), etPassword.getText().toString());
+                nama = etNama.getText().toString();
+                email = etEmail.getText().toString();
+                password = etPassword.getText().toString();
                 showWait();
-                SignUp();
+                uploadImage();
             }
         });
 
@@ -95,26 +106,68 @@ public class DaftarActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            String img = getStringImage(bitmap);
-            image = RequestBody.create(MediaType.parse("text/plain"), img);
+            File file = createTempFile(bitmap);
+            RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file);
+            image = MultipartBody.Part.createFormData("gambar", file.getName(), reqFile);
+
             tvGambar.setText(selectedImage.toString());
 
         }
     }
 
-    public void SignUp(){
-        final RestAPI service = RetrofitService.createRetrofitClient();
-        Call<DataResponse> req = service.signup(image, nama, email, password);
+    private File createTempFile(Bitmap bitmap) {
+        File file = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+                , System.currentTimeMillis() +"_image.jpeg");
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+
+        bitmap.compress(Bitmap.CompressFormat.JPEG,100, bos);
+        byte[] bitmapdata = bos.toByteArray();
+        //write the bytes in file
+
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            fos.write(bitmapdata);
+            fos.flush();
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return file;
+    }
+
+    public void uploadImage(){
+        Call<ImageResponse> req = service.uploadGambar(image);
+        req.enqueue(new Callback<ImageResponse>() {
+            @Override
+            public void onResponse(Call<ImageResponse> call, Response<ImageResponse> response) {
+                boolean success = response.body().getSuccess();
+                if (success) {
+                    SignUp(response.body().getData());
+                } else {
+                    Toast.makeText(DaftarActivity.this, "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
+                    removeWait();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ImageResponse> call, Throwable t) {
+                t.printStackTrace();
+                Toast.makeText(DaftarActivity.this, "Terjadi Kesalahan "+t.toString(), Toast.LENGTH_SHORT).show();
+                removeWait();
+            }
+        });
+    }
+
+    public void SignUp(String urlGambar){
+        Call<DataResponse> req = service.signup(urlGambar, nama, email, password);
         req.enqueue(new Callback<DataResponse>() {
             @Override
             public void onResponse(Call<DataResponse> call, Response<DataResponse> response) {
-                String status = response.body().getStatus();
-                if (status.equalsIgnoreCase("sukses")){
+                boolean success = response.body().getSuccess();
+                if (success){
                     Toast.makeText(DaftarActivity.this, "Daftar Sukses", Toast.LENGTH_SHORT).show();
                     onBackPressed();
-                }else if (status.equalsIgnoreCase("gagal")){
-                    Toast.makeText(DaftarActivity.this, "Username atau Password salah", Toast.LENGTH_SHORT).show();
-                }else {
+                } else {
                     Toast.makeText(DaftarActivity.this, "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
                 }
                 removeWait();

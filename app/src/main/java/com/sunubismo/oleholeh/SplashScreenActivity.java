@@ -22,7 +22,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                 sessionManager = new SessionManager(getApplicationContext());
                 Intent intent;
                 if(sessionManager.isLoggedIn()){
-                    intent = new Intent(SplashScreenActivity.this, MainActivity.class);
+                    intent = new Intent(SplashScreenActivity.this, MenuActivity.class);
                 }else {
                     intent = new Intent(SplashScreenActivity.this, LoginActivity.class);
                 }

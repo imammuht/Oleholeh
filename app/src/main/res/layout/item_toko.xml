@@ -40,10 +40,20 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="#000000"/>
-            <TextView
-                android:id="@+id/tv_toko_rating"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <RatingBar
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:id="@+id/rb_rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/tv_toko_rating"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
             <TextView
                 android:id="@+id/tv_toko_alamat"
                 android:layout_width="match_parent"
@@ -60,6 +70,24 @@
                 android:id="@+id/tv_toko_telepon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/bt_toko"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Lihat Profil"/>
+                <Button
+                    android:id="@+id/bt_lokasi"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Lokasi"/>
+            </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>

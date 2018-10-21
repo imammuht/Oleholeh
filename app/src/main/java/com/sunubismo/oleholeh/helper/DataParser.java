@@ -26,12 +26,12 @@ public class DataParser {
 
             /** Traversing all routes */
             for(int i=0;i<jRoutes.length();i++){
-                jLegs = ( (JSONObject)jRoutes.get(i)).getJSONArray("legs");
+                jLegs = ((JSONObject)jRoutes.get(i)).getJSONArray("legs");
                 List path = new ArrayList<>();
 
                 /** Traversing all legs */
                 for(int j=0;j<jLegs.length();j++){
-                    jSteps = ( (JSONObject)jLegs.get(j)).getJSONArray("steps");
+                    jSteps = ((JSONObject)jLegs.get(j)).getJSONArray("steps");
 
                     /** Traversing all steps */
                     for(int k=0;k<jSteps.length();k++){
@@ -59,6 +59,40 @@ public class DataParser {
 
         return routes;
     }
+
+    /** Receives a JSONObject and returns a list of lists containing latitude and longitude */
+    public String getDistance(JSONObject jObject){
+
+        JSONArray jRoutes;
+        JSONArray jLegs;
+        JSONObject jDistance;
+        String distance = "";
+
+        try {
+
+            jRoutes = jObject.getJSONArray("routes");
+
+            /** Traversing all routes */
+            for(int i=0;i<jRoutes.length();i++){
+                jLegs = ((JSONObject)jRoutes.get(i)).getJSONArray("legs");
+
+                /** Traversing all legs */
+                for(int j=0;j<jLegs.length();j++){
+
+                    jDistance = ((JSONObject)jLegs.get(j)).getJSONObject("distance");
+                    distance = jDistance.getString("text");
+
+                }
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+        }
+
+        return distance;
+    }
+
 
 
     /**

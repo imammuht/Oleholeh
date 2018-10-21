@@ -12,12 +12,14 @@ import com.sunubismo.oleholeh.api.RestAPI;
 import com.sunubismo.oleholeh.api.RetrofitService;
 import com.sunubismo.oleholeh.model.DataResponse;
 import com.sunubismo.oleholeh.model.Rating;
+import com.sunubismo.oleholeh.model.rating.Datum;
+import com.sunubismo.oleholeh.model.rating.RatingResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RatingActivity extends AppCompatActivity {
+public class RatingActivity extends BaseActivity {
 
     public static final String KEY_ID_TOKO = "id_toko";
 
@@ -38,13 +40,13 @@ public class RatingActivity extends AppCompatActivity {
 
     private void loadRating(){
         final RestAPI service = RetrofitService.createRetrofitClient();
-        Call<DataResponse> getRating = service.loadAllRating(idtoko);
-        getRating.enqueue(new Callback<DataResponse>() {
+        Call<RatingResponse> getRating = service.loadRating(idtoko);
+        getRating.enqueue(new Callback<RatingResponse>() {
             @Override
-            public void onResponse(Call<DataResponse> call, Response<DataResponse> response) {
-                RatingAdapter adapter = new RatingAdapter(getApplicationContext(), response.body().getRating(), new RatingAdapter.OnItemClickListener() {
+            public void onResponse(Call<RatingResponse> call, Response<RatingResponse> response) {
+                RatingAdapter adapter = new RatingAdapter(getApplicationContext(), response.body().getData(), new RatingAdapter.OnItemClickListener() {
                     @Override
-                    public void onClick(Rating Item) {
+                    public void onClick(Datum Item) {
                         Toast.makeText(RatingActivity.this, String.valueOf(Item.getNilai()), Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -52,7 +54,7 @@ public class RatingActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<DataResponse> call, Throwable t) {
+            public void onFailure(Call<RatingResponse> call, Throwable t) {
             }
         });
     }

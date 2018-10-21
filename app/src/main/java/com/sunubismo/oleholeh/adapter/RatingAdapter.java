@@ -11,17 +11,18 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.sunubismo.oleholeh.R;
 import com.sunubismo.oleholeh.model.Rating;
+import com.sunubismo.oleholeh.model.rating.Datum;
 
 import java.util.List;
 
 public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder>{
 
     private final OnItemClickListener listener;
-    private List<Rating> rating;
+    private List<Datum> rating;
     private Context context;
 
 
-    public RatingAdapter(Context context, List<Rating> rating, OnItemClickListener listener) {
+    public RatingAdapter(Context context, List<Datum> rating, OnItemClickListener listener) {
         this.context = context;
         this.rating = rating;
         this.listener = listener;
@@ -36,7 +37,7 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
     @Override
     public void onBindViewHolder(RatingAdapter.ViewHolder viewHolder, int i) {
         viewHolder.click(rating.get(i),listener);
-        Picasso.with(viewHolder.image.getContext()).load(rating.get(i).getImage()).into(viewHolder.image);
+        Picasso.with(viewHolder.image.getContext()).load(rating.get(i).getGambar()).into(viewHolder.image);
         viewHolder.nama.setText(rating.get(i).getNama());
         viewHolder.nilai.setText(""+rating.get(i).getNilai()+" Bintang");
         viewHolder.komentar.setText(rating.get(i).getKomentar());
@@ -48,7 +49,7 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
     }
 
     public interface OnItemClickListener {
-        void onClick(Rating Item);
+        void onClick(Datum Item);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{
@@ -62,7 +63,7 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
             nilai = (TextView)view.findViewById(R.id.tv_user_rating);
             komentar = (TextView)view.findViewById(R.id.tv_user_komentar);
         }
-        void click(final Rating toko, final OnItemClickListener listener) {
+        void click(final Datum toko, final OnItemClickListener listener) {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

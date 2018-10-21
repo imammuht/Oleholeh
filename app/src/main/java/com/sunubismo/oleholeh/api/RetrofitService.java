@@ -8,7 +8,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class RetrofitService {
-    private final static String API_URL = "http://oleholehjogjakarta.pe.hu/";
+//    private final static String API_URL = "http://oleholehjogjakarta.pe.hu/";
+    private final static String API_URL = "http://ianasa.org/me/skripsi/";
 
     public RetrofitService(){
     }
