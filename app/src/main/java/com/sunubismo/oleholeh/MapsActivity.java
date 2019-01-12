@@ -107,6 +107,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private String getUrl(LatLng origin, LatLng dest) {
+        String APIKey = "AIzaSyDmp1vavKnyT9mt0TGnaG_w6LvRha8ruP0";
         // Origin of route
         String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
         // Destination of route
@@ -118,7 +119,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Output format
         String output = "json";
         // Building the url to the web service
-        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters;
+        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + APIKey;
         return url;
     }
 
