@@ -46,11 +46,11 @@ public interface RestAPI {
                               @Field("password") String password);
 
     @FormUrlEncoded
-    @POST("add_rating.php")
+    @POST("post-rating.php")
     Call<DataResponse> postRating(@Field("token") String token,
                                   @Field("user_id") String id_user,
                                   @Field("toko_id") String id_toko,
-                                  @Field("nilai") String nilai,
+                                  @Field("nilai_rating") String nilai,
                                   @Field("komentar") String komentar);
 
 }
