@@ -116,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<TokoResponse> call, Response<TokoResponse> response) {
                 final List<Datum> toko = response.body().getData();
+
                 for (int i = 0; i < toko.size(); i++) {
                     LatLng start;
                     if (mLastLocation != null) {
@@ -127,13 +128,14 @@ public class MainActivity extends AppCompatActivity {
                     toko.get(i).setDistance(getDistance(start, end));
                 }
 
-                Collections.sort(toko, new Comparator<Datum>(){
-                    public int compare(Datum obj1, Datum obj2) {
-                        // ## Ascending order
-                        return Double.valueOf(obj1.getDistance()).compareTo(obj2.getDistance()); // To compare integer values
-
-                    }
-                });
+                if (sorting.equalsIgnoreCase("nama")) {
+                    Collections.sort(toko, new Comparator<Datum>(){
+                        public int compare(Datum obj1, Datum obj2) {
+                            // ## Ascending order
+                            return Double.valueOf(obj1.getDistance()).compareTo(obj2.getDistance()); // To compare integer values
+                        }
+                    });
+                }
 
                 TokoAdapter adapter = new TokoAdapter(getApplicationContext(), toko, new TokoAdapter.OnItemClickListener() {
                     @Override
