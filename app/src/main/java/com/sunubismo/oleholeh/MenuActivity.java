@@ -16,7 +16,7 @@ import com.sunubismo.oleholeh.helper.SessionManager;
 
 public class MenuActivity extends BaseActivity {
 
-    LinearLayout btList, btProfile, btAbout, btClose;
+    LinearLayout btList, btProfile, btAbout, btAround, btClose;
     SessionManager sessionManager;
 
     @Override
@@ -33,6 +33,7 @@ public class MenuActivity extends BaseActivity {
         btList = (LinearLayout) findViewById(R.id.bt_list);
         btProfile = (LinearLayout) findViewById(R.id.bt_profile);
         btAbout = (LinearLayout) findViewById(R.id.bt_about);
+        btAround = (LinearLayout) findViewById(R.id.bt_around);
         btClose = (LinearLayout) findViewById(R.id.bt_close);
         btList.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,23 +53,28 @@ public class MenuActivity extends BaseActivity {
                 startActivity(new Intent(MenuActivity.this, AboutActivity.class));
             }
         });
-        btClose.setOnClickListener(new View.OnClickListener() {
+        btAround.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MenuActivity.this, AroundActivity.class));
-//                AlertDialog.Builder builder = new AlertDialog.Builder(MenuActivity.this);
-//                builder.setMessage("Keluar dari aplikasi?")
-//                        .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
-//                            public void onClick(DialogInterface dialog, int id) {
-//                                sessionManager.logoutUser();
-//                            }
-//                        })
-//                        .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
-//                            public void onClick(DialogInterface dialog, int id) {
-//                                //do nothing
-//                            }
-//                        });
-//                builder.show();
+            }
+        });
+        btClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(MenuActivity.this);
+                builder.setMessage("Keluar dari aplikasi?")
+                        .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                sessionManager.logoutUser();
+                            }
+                        })
+                        .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                //do nothing
+                            }
+                        });
+                builder.show();
             }
         });
     }
