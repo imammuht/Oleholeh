@@ -28,6 +28,8 @@ public class Datum implements Serializable {
     private Double mLng;
     @SerializedName("n_rating")
     private Float mNRating;
+    @SerializedName("t_rating")
+    private int mTRating;
     @SerializedName("nama")
     private String mNama;
     @SerializedName("telepon")
@@ -113,6 +115,14 @@ public class Datum implements Serializable {
 
     public void setNRating(Float nRating) {
         mNRating = nRating;
+    }
+
+    public int getmTRating() {
+        return mTRating;
+    }
+
+    public void setmTRating(int mTRating) {
+        this.mTRating = mTRating;
     }
 
     public String getNama() {

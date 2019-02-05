@@ -90,6 +90,18 @@ public class TokoActivity extends BaseActivity implements View.OnClickListener{
                 }
             }
         });
+
+        if (toko.getDistance() <= 0.1) {
+            AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+            alertDialog.setTitle("Pesan");
+            alertDialog.setMessage("Toko ini berada di sekitar anda, berikan penilaian sekarang");
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            alertDialog.show();        }
     }
 
     private void showToko() {
@@ -129,8 +141,12 @@ public class TokoActivity extends BaseActivity implements View.OnClickListener{
                 startActivity(intSms);
                 break;
             case R.id.bt_email:
-                Intent intMail = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:"+toko.getEmail()));
-                startActivity(intMail);
+                if (toko.getEmail().contains("@")) {
+                    Intent intMail = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:"+toko.getEmail()));
+                    startActivity(intMail);
+                } else {
+                    Toast.makeText(this, "Toko tidak mempunyai email", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.bt_all_rating:
                 Intent intRating = new Intent(TokoActivity.this, RatingActivity.class);

@@ -48,7 +48,7 @@ public class TokoAdapter extends RecyclerView.Adapter<TokoAdapter.ViewHolder>{
         viewHolder.rb.setStepSize(0.01f);
         viewHolder.rb.setRating(toko.get(i).getNRating());
         viewHolder.rb.invalidate();
-        viewHolder.rating.setText(String.valueOf(round(toko.get(i).getNRating(), 1)) + " dari 5 bintang");
+        viewHolder.rating.setText(String.valueOf(round(toko.get(i).getNRating(), 1)) + " dari 5 bintang (" + String.valueOf(toko.get(i).getmTRating()) + ")" );
         viewHolder.alamat.setText("Alamat: "+toko.get(i).getAlamat());
         viewHolder.hari.setText("Buka Hari "+toko.get(i).getHariBuka());
         viewHolder.jam.setText("Jam "+toko.get(i).getJamKerja());

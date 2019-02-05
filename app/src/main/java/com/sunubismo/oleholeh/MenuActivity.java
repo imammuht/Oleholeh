@@ -55,19 +55,20 @@ public class MenuActivity extends BaseActivity {
         btClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(MenuActivity.this);
-                builder.setMessage("Keluar dari aplikasi?")
-                        .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                sessionManager.logoutUser();
-                            }
-                        })
-                        .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                //do nothing
-                            }
-                        });
-                builder.show();
+                startActivity(new Intent(MenuActivity.this, AroundActivity.class));
+//                AlertDialog.Builder builder = new AlertDialog.Builder(MenuActivity.this);
+//                builder.setMessage("Keluar dari aplikasi?")
+//                        .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int id) {
+//                                sessionManager.logoutUser();
+//                            }
+//                        })
+//                        .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int id) {
+//                                //do nothing
+//                            }
+//                        });
+//                builder.show();
             }
         });
     }

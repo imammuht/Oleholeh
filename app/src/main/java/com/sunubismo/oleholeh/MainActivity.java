@@ -111,8 +111,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getListToko() {
-        Call<TokoResponse> getData = service.loadToko(keyword, sorting); // temporary
-        getData.enqueue(new Callback<TokoResponse>() {
+        service.loadToko(keyword, sorting)
+        .enqueue(new Callback<TokoResponse>() {
             @Override
             public void onResponse(Call<TokoResponse> call, Response<TokoResponse> response) {
                 final List<Datum> toko = response.body().getData();
